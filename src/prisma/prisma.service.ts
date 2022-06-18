@@ -19,7 +19,7 @@ export class PrismaService extends PrismaClient {
 //This methode to clean our db evry time we run  a test we use transactional methode to make a delete in order avpoid prisma to make some optimisation  
   cleanDB(){
     return this.$transaction([
-      this.bookmark.deleteMany(),
+      this.post.deleteMany(),
       this.user.deleteMany()
     ])
   }

@@ -32,7 +32,7 @@ export class AuthService {
       // delete user.hash;
 
       //return the saved user
-      return this.signToken(user.id, user.email);
+      return this.signToken(user.id, user.email,user.roles);
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         //DUPLICATE FIELD
@@ -66,15 +66,16 @@ export class AuthService {
       throw new ForbiddenException('Credentials incorrect !');
 
     //send back the token
-    return this.signToken(user.id, user.email);
+    return this.signToken(user.id, user.email,user.roles);
   }
 
   //This fct to sing the token
 
-  async signToken(userId: number, email: string):Promise<{access_token:string}> {
+  async signToken(userId: number, email: string,roles:string[]):Promise<{access_token:string}> {
     const payload = {
       sub: userId,
       email,
+      roles
     };
 
     const secret = this.config.get('JWT_SECRET');

@@ -25,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(
     });
   }
 
-  async validate(payload: { sub: number; email: string }) {
+  async validate(payload) {
     // console.log({ payload });
     //by returning the payload it is going to append the payload to the user object of request object
     //==>req.user  = payload
@@ -34,6 +34,10 @@ export class JwtStrategy extends PassportStrategy(
             id:payload.sub
         }
     });
+
+
+    // console.log("Here is user roles ",user.roles);
+    
     delete user.hash
     return user;
   }

@@ -7,7 +7,7 @@ import { PrismaService } from '../src/prisma/prisma.service';
 import * as pactum from 'pactum';
 import { AuthDto } from 'src/auth/dto';
 import { EditUserDto } from '../src/user/dto/edit-user.dto';
-import { CreateBookmarkDto, EditBookmarkDto } from 'src/bookmark/dto';
+import { CreatePostDto, EditPostDto } from 'src/post/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -169,12 +169,12 @@ describe('App e2e', () => {
     });
   });
 
-  describe('Bookmark', () => {
-    describe('Get empty bookmarks', () => {
-      test("Should get bookmarks",()=>{
+  describe('Post', () => {
+    describe('Get empty posts', () => {
+      test("Should get posts",()=>{
         return pactum
           .spec()
-          .get('/bookmarks')
+          .get('/psots')
           .withHeaders({
             Authorization:'Bearer $S{userAt}'
           })
@@ -186,7 +186,7 @@ describe('App e2e', () => {
 
     describe('Create bookmark', () => {
 
-      const dto:CreateBookmarkDto = {
+      const dto:CreatePostDto = {
         title:'First Bookmark',
         link:'https://www.youtube.com/watch?v=GHTA143_b-s&t=9726s'
 
@@ -194,21 +194,21 @@ describe('App e2e', () => {
       test("Should create a bookmark",()=>{
         return pactum
           .spec()
-          .post('/bookmarks')
+          .post('/posts')
           .withHeaders({
             Authorization:'Bearer $S{userAt}'
           })
           .withBody(dto)
           .expectStatus(201)
-          .stores("bookmarkId",'id')
+          .stores("postId",'id')
           .inspect();
       })
     });
-    describe('Get bookmarks', () => {
-      test("Should get a bookmarks",()=>{
+    describe('Get posts', () => {
+      test("Should get a posts",()=>{
         return pactum
           .spec()
-          .get('/bookmarks')
+          .get('/posts')
           .withHeaders({
             Authorization:'Bearer $S{userAt}'
           })
@@ -217,31 +217,31 @@ describe('App e2e', () => {
           .inspect();
       })
     });
-    describe('Get bookmark by id', () => {
-      test("Should get a bookmark by id ",()=>{
+    describe('Get post by id', () => {
+      test("Should get a post by id ",()=>{
         return pactum
           .spec()
-          .get('/bookmarks/{id}')
-          .withPathParams('id','$S{bookmarkId}')
+          .get('/posts/{id}')
+          .withPathParams('id','$S{postId}')
           .withHeaders({
             Authorization:'Bearer $S{userAt}'
           })
           .expectStatus(200)
-          .expectBodyContains('$S{bookmarkId}')
+          .expectBodyContains('$S{postId}')
           .inspect();
       })
     });
-    describe('Edit bookmark by id', () => {
+    describe('Edit post by id', () => {
 
-      const dto :EditBookmarkDto = {
+      const dto :EditPostDto = {
           title:"Nest js course ",
           description:"Learn How to build a rest api with nest js framework"
       }
-      test("Should edit a bookmark  ",()=>{
+      test("Should edit a post  ",()=>{
         return pactum
           .spec()
-          .patch('/bookmarks/{id}')
-          .withPathParams('id','$S{bookmarkId}')
+          .patch('/posts/{id}')
+          .withPathParams('id','$S{postId}')
           .withBody(dto)
           .withHeaders({
             Authorization:'Bearer $S{userAt}'
@@ -252,12 +252,12 @@ describe('App e2e', () => {
       })
 
     });
-    describe('Delete bookmark by id', () => {
-      test("Should delete a bookmark  ",()=>{
+    describe('Delete post by id', () => {
+      test("Should delete a post  ",()=>{
         return pactum
           .spec()
-          .delete('/bookmarks/{id}')
-          .withPathParams('id','$S{bookmarkId}')
+          .delete('/posts/{id}')
+          .withPathParams('id','$S{postId}')
           .withHeaders({
             Authorization:'Bearer $S{userAt}'
           })
@@ -267,10 +267,10 @@ describe('App e2e', () => {
     });
   });
 
-  test("Should get bookmarks",()=>{
+  test("Should get posts",()=>{
     return pactum
       .spec()
-      .get('/bookmarks')
+      .get('/posts')
       .withHeaders({
         Authorization:'Bearer $S{userAt}'
       })

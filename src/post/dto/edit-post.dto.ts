@@ -3,7 +3,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class EditBookmarkDto {
+export class EditPostDto {
   @IsString()
   @IsOptional()
   title?: string;

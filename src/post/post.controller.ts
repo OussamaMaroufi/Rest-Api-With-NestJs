@@ -13,17 +13,17 @@ import {
 } from '@nestjs/common';
 import { GetUser } from '../auth/decorator/get-user.decorator';
 import { JwtGuard } from '../auth/guard/jwt.guard';
-import { BookmarkService } from './bookmark.service';
-import { CreateBookmarkDto, EditBookmarkDto } from './dto';
+import { postService } from './post.service';
+import { CreatePostDto, EditPostDto } from './dto';
 
 
 @UseGuards(JwtGuard)
-@Controller('bookmarks')
-export class BookmarkController {
-  constructor(private bookmarkService: BookmarkService) {}
+@Controller('posts')
+export class postController {
+  constructor(private postService: postService) {}
   @Get()
   getBookmarks(@GetUser('id') userId: number) {
-    return this.bookmarkService.getBookmarks(userId);
+    return this.postService.getPosts(userId);
   }
 
   @Get(':id')
@@ -31,7 +31,7 @@ export class BookmarkController {
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
-    return this.bookmarkService.getBookmarkById(
+    return this.postService.getPostById(
       userId,
       bookmarkId,
     );
@@ -40,18 +40,18 @@ export class BookmarkController {
   @Post()
   createBookmark(
     @GetUser('id') userId: number,
-    @Body() dto: CreateBookmarkDto,
+    @Body() dto: CreatePostDto,
   ) {
-    return this.bookmarkService.createBookmark(userId, dto);
+    return this.postService.createPost(userId, dto);
   }
 
   @Patch(':id')
   editBookmarkById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
-    @Body() dto: EditBookmarkDto,
+    @Body() dto: EditPostDto,
   ) {
-    return this.bookmarkService.editBookmarkById(
+    return this.postService.editPostById(
       userId,
       bookmarkId,
       dto,
@@ -64,7 +64,7 @@ export class BookmarkController {
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
-    return this.bookmarkService.deleteBookmarkById(
+    return this.postService.deletePostById(
       userId,
       bookmarkId,
     );

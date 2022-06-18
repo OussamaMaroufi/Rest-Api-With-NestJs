@@ -22,12 +22,14 @@ model User {
   firstName String?
   lastName  String?
 
-  bookmarks Bookmark[]
+  roles String[] 
+
+  posts Post[]
 
   @@map("users")
 }
 
-model Bookmark {
+model Post {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -37,8 +39,8 @@ model Bookmark {
   link        String?
 
   //like that we make OneToMany Relation
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
+  authorId Int
+  user   User @relation(fields: [authorId], references: [id])
 
-  @@map("bookmarks")
+  @@map("posts")
 }

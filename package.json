@@ -10,7 +10,6 @@
     "db:dev:up": "sudo docker-compose up -d dev-db",
     "db:dev:rm": " sudo docker-compose rm -s -f -v dev-db ",
     "db:dev:restart": "npm run db:dev:rm && npm run db:dev:up && sleep 2",
-
     "prisma:test:deploy": "dotenv -e .env.test -- prisma migrate deploy",
     "db:test:up": "sudo docker-compose up -d test-db",
     "db:test:rm": " sudo docker-compose rm -s -f -v test-db ",
@@ -27,8 +26,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "prepretest:e2e":"npm run db:test:restart ",
-    "pretest:e2e":"npm run prisma:test:deploy",
+    "prepretest:e2e": "npm run db:test:restart",
+    "pretest:e2e": "npm run prisma:test:deploy",
     "test:e2e": "dotenv -e .env.test -- jest --watch --no-cache --config ./test/jest-e2e.json"
   },
   "dependencies": {
@@ -38,6 +37,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@prisma/client": "^3.14.0",
     "argon2": "^0.28.5",
+    "jwt-decode": "^3.1.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
