@@ -22,12 +22,12 @@ import { CreatePostDto, EditPostDto } from './dto';
 export class postController {
   constructor(private postService: postService) {}
   @Get()
-  getBookmarks(@GetUser('id') userId: number) {
+  getPosts(@GetUser('id') userId: number) {
     return this.postService.getPosts(userId);
   }
 
   @Get(':id')
-  getBookmarkById(
+  getPostById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
@@ -38,7 +38,7 @@ export class postController {
   }
 
   @Post()
-  createBookmark(
+  createPost(
     @GetUser('id') userId: number,
     @Body() dto: CreatePostDto,
   ) {
@@ -46,7 +46,7 @@ export class postController {
   }
 
   @Patch(':id')
-  editBookmarkById(
+  editPostById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
     @Body() dto: EditPostDto,
@@ -60,7 +60,7 @@ export class postController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  deleteBookmarkById(
+  deletePostById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
